@@ -21,7 +21,7 @@
                     class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form method="POST" action="{{route('gerar-bilhete')}}">
+                    <form method="GET" action="{{route('gerar-bilhete')}}">
                     
                         @csrf
                     <div class="divider d-flex align-items-center my-4">
