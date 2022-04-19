@@ -21,9 +21,9 @@
                     class="img-fluid" alt="Sample image">
                 </div>
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                    <form method="GET" action="{{route('gerar-bilhete')}}">
+                    <form method="POST" action="{{route('gerar-bilhete')}}">
                     
-            
+                        @csrf
                     <div class="divider d-flex align-items-center my-4">
                         <p class="text-center fw-bold mx-3 mb-0"><b>Especificações</b></p>
                     </div>
@@ -80,6 +80,7 @@
         </section>
 
         <section class="">
+
             <!-- Footer -->
             <footer class="text-center text-white" style="background-color: #0a4275;">
                 <!-- Grid container -->

@@ -17,4 +17,4 @@ use App\Http\Controllers\MediaController;
 
 Route::get('/', [MediaController::class, 'home']);
 
-Route::get('/gerar-bilhete', [MediaController::class, 'generate'])->name('gerar-bilhete');
+Route::post('/gerar-bilhete', [MediaController::class, 'generate'])->name('gerar-bilhete');
