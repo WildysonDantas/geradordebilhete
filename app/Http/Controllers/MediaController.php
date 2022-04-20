@@ -29,15 +29,24 @@ class MediaController extends Controller
 
     public function makeimageOne($count, $array)  
     {  
-       $img = Image::make(public_path('images/modelo1-1n.jpg'));  
+       $img = Image::make(public_path('images/modelo1-1w.jpg'));  
        //$img->text('This is a example ', 120, 100);
        $position = 82;
        // use callback to define details
+       $data  =Carbon::now();
+       $dt = $data->format('d/m/Y');
 
        foreach($array as $item){
             $img->text($item, 105, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(20);
+                
+            });  
+
+            $img->text($dt, 65,  22, function($font) {
+                $font->file(public_path('arial/arial.ttf'));
+                $font->size(13);
+                $font->color('#FFFAFA');
                 
             });  
             $position += 37;
@@ -50,15 +59,24 @@ class MediaController extends Controller
 
     public function makeimageTwo($count, $array, $array2)  
     {  
-       $img = Image::make(public_path('images/modelo1-2n.jpg'));  
+       $img = Image::make(public_path('images/modelo1-2w.jpg'));  
        //$img->text('This is a example ', 120, 100);
        $position = 82;
        // use callback to define details
+       $data  =Carbon::now();
+       $dt = $data->format('d/m/Y');
 
        foreach($array as $item){
             $img->text($item, 105, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(20);
+                
+            });  
+
+            $img->text($dt, 65,  22, function($font) {
+                $font->file(public_path('arial/arial.ttf'));
+                $font->size(13);
+                $font->color('#FFFAFA');
                 
             });  
             $position += 37;
@@ -73,6 +91,14 @@ class MediaController extends Controller
                 $font->size(20);
                 
             });  
+
+            $img->text($dt, 607,  22, function($font) {
+                $font->file(public_path('arial/arial.ttf'));
+                $font->size(13);
+                $font->color('#FFFAFA');
+                
+            });  
+            
             $position += 37;
 
         }
@@ -83,17 +109,28 @@ class MediaController extends Controller
 
     public function makeimageThree($count, $array, $array2, $array3)  
     {  
-       $img = Image::make(public_path('images/modelo1-3.jpg'));  
+       $img = Image::make(public_path('images/modelo1-3w.jpg'));  
        //$img->text('This is a example ', 120, 100);
        $position = 82;
        // use callback to define details
         //Array 1
+        $data  =Carbon::now();
+        $dt = $data->format('d/m/Y');
+        //dd($data->format('d/m/Y'));
        foreach($array as $item){
             $img->text($item, 105, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(20);
                 
             });  
+
+            $img->text($dt, 65,  22, function($font) {
+                $font->file(public_path('arial/arial.ttf'));
+                $font->size(13);
+                $font->color('#FFFAFA');
+                
+            });  
+            
             $position += 37;
 
        }
@@ -106,6 +143,14 @@ class MediaController extends Controller
                 $font->size(20);
                 
             });  
+
+            $img->text($dt, 607,  22, function($font) {
+                $font->file(public_path('arial/arial.ttf'));
+                $font->size(13);
+                $font->color('#FFFAFA');
+                
+            });  
+
             $position += 37;
 
         }
@@ -118,6 +163,14 @@ class MediaController extends Controller
                  $font->size(20);
                  
              });  
+
+             $img->text($dt, 1152,  22, function($font) {
+                $font->file(public_path('arial/arial.ttf'));
+                $font->size(13);
+                $font->color('#FFFAFA');
+                
+            });  
+
              $position += 37;
  
          }
@@ -137,7 +190,7 @@ class MediaController extends Controller
         $intervalo = $max - $min;
 
 
-
+       
 
 
         if($min > $max){
@@ -150,10 +203,7 @@ class MediaController extends Controller
             return back()->with('error', 'O numero de bilhetes a ser gerados é maior que o intervalo de numeros informados!');
             //retornar erro pois a  
         }
-        $model1 = public_path('images/modelo1-1.jpg');
-        $model2 = public_path('images/modelo1-2.jpg');
-        $model3 = public_path('images/modelo1-3.jpg');
-        $path = [$model1, $model2, $model3];
+      
 
         //return view('modelo/pdf1', ['path' => $path]);
        // dd($modelo);
@@ -197,7 +247,7 @@ class MediaController extends Controller
         $mytime = Carbon::now();
         //dd("Successo", $mytime->toDateTimeString()); 
        
-        $pdf = PDF::loadView('modelo/pdf1', ['model1' => $model1, 'model2'=>$model2, 'model3'=> $model3, 'max' =>$l, 'numeros'=>$numeros]);
+        $pdf = PDF::loadView('modelo/pdf1', ['max' =>$l, 'numeros'=>$numeros]);
         return $pdf->stream('invoice.pdf');
       
        
