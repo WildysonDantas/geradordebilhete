@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MediaController;
- 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,20 @@ use App\Http\Controllers\MediaController;
 |
 */
 
-Route::get('/', [MediaController::class, 'home']);
+Route::get('/', [LoginController::class, 'home'])->name('home');
 
-Route::get('/gerar-bilhete', [MediaController::class, 'generate'])->name('gerar-bilhete');
+
+
+Route::post('/login', [LoginController::class, 'signIn'])->name('login');
+Route::post('/logout', [LoginController::class, 'signOut'])->name('logout');
+
+
+Route::middleware('auth' ,'check.is.admin')->group(function () {
+    Route::get('/gerar-bilhete', [MediaController::class, 'generate'])->name('gerar-bilhete');
+    Route::get('/find-ticket', [MediaController::class, 'findTicket'])->name('find-ticket');
+    Route::get('/view-ticket/{ticket}', [MediaController::class, 'viewTicket'])->name('view-ticket');
+    Route::get('/dashboard', [DashboardController::class, 'home'])->name('dashboard');
+    Route::get('/ticket', [DashboardController::class, 'ticket'])->name('ticket');
+    Route::get('/search-ticket', [DashboardController::class, 'searchTicket'])->name('search-ticket');
+   
+});

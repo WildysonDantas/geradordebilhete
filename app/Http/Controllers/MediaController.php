@@ -7,6 +7,9 @@ use PDF;
 use Image;
 use Dompdf\Options;
 use Carbon\Carbon;
+use Str;
+use App\Models\Ticket;
+use Illuminate\Support\Facades\DB;
 
 class MediaController extends Controller
 {
@@ -16,10 +19,7 @@ class MediaController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function home()
-    {
-        return view("home");
-    }
+   
 
     function randomGen($min, $max, $quantity) {
         $numbers = range($min, $max);
@@ -27,171 +27,160 @@ class MediaController extends Controller
         return array_slice($numbers, 0, $quantity);
     }
 
-    public function makeimageOne($count, $array)  
-    {  
-       $img = Image::make(public_path('images/modelo1-1w.jpg'));  
-       //$img->text('This is a example ', 120, 100);
-       $position = 82;
-       // use callback to define details
-       $data  =Carbon::now();
-       $dt = $data->format('d/m/Y');
+    //Escreve uma Imagem
+    public function makeimageOne($count, $array) {  
+       $img = Image::make(public_path('images/b1.jpg'));  
+       $position = 125;
+       $random = Str::random(8);
+       $dt = "cod.: ". $random;
 
        foreach($array as $item){
-            $img->text($item, 105, $position, function($font) {
+            $img->text($item, 143, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(20);
+                $font->size(27);
                 
             });  
 
-            $img->text($dt, 65,  22, function($font) {
+            $img->text($dt, 172,  410, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->color('#FFFAFA');
+                $font->size(16);
+                $font->align('center');
                 
             });  
-            $position += 37;
+            $position += 56;
 
        }
       
        $img->save(public_path('images/bilhetes/'.$count.'.jpg')); 
+       return $random;
       
     }  
 
-    public function makeimageTwo($count, $array, $array2)  
-    {  
-       $img = Image::make(public_path('images/modelo1-2w.jpg'));  
-       //$img->text('This is a example ', 120, 100);
-       $position = 82;
+    //Escreve duas Imagens em Linha
+    public function makeimageTwo($count, Array $array, Array $array2) {  
+       $img = Image::make(public_path('images/b2.jpg'));  
+       $position = 125;
        // use callback to define details
-       $data  =Carbon::now();
-       $dt = $data->format('d/m/Y');
-
+       $random = Str::random(8);
+       $dt = "cod.: ". $random;
+        
+       $random = Str::random(8);
+       $keys = [$random];
        foreach($array as $item){
-            $img->text($item, 105, $position, function($font) {
+            $img->text($item, 143, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(20);
+                $font->size(27);
                 
             });  
 
-            $img->text($dt, 65,  22, function($font) {
+            $img->text($dt, 172,  410, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->color('#FFFAFA');
+                $font->size(16);
+                $font->align('center');
+                
                 
             });  
-            $position += 37;
+            $position += 56;
 
        }
 
-       $position = 82;
+       $position = 125;
+       $random2 = Str::random(8);
+       $dt = "cod.: ". $random2;
+       $keys = [$random, $random2];
+      
+      
 
        foreach($array2 as $item){
-            $img->text($item, 652, $position, function($font) {
+            $img->text($item, 950, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(20);
+                $font->size(27);
                 
             });  
 
-            $img->text($dt, 607,  22, function($font) {
+            $img->text($dt, 982,  410, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->color('#FFFAFA');
+                $font->size(16);
+                $font->align('center');
+               
                 
             });  
             
-            $position += 37;
+            $position += 56;
 
         }
       
        $img->save(public_path('images/bilhetes/'.$count.'.jpg')); 
+
+       return $keys;
       
     }  
 
-    public function makeimageThree($count, $array, $array2, $array3)  
-    {  
-       $img = Image::make(public_path('images/modelo1-3w.jpg'));  
-       //$img->text('This is a example ', 120, 100);
-       $position = 82;
-       // use callback to define details
-        //Array 1
+    //Mudar para um ou duas imagens do PDF
+    public function switchTickets(Array $numeros, Int $range){
+
+        $i=0;
+        $count = 0;
+        $l=0;
         $data  =Carbon::now();
         $dt = $data->format('d/m/Y');
-        //dd($data->format('d/m/Y'));
-       foreach($array as $item){
-            $img->text($item, 105, $position, function($font) {
-                $font->file(public_path('arial/arial.ttf'));
-                $font->size(20);
-                
-            });  
+       
+        $rd = [];
 
-            $img->text($dt, 65,  22, function($font) {
-                $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->color('#FFFAFA');
-                
-            });  
-            
-            $position += 37;
 
+        while($i < count($numeros)){
+            if($count + 1 < $range){
+               $arr1 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
+               $i += 4;
+               $arr2 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
+               $i += 4;
+               //Retornando os ids de seus repectivos numeros
+               $ids = $this->makeimageTwo($l, $arr1, $arr2);
+                
+               $rd[$ids[0]]['value'] = $arr1;
+               $rd[$ids[0]]['id'] =$ids[0];
+               $rd[$ids[1]]['value'] = $arr2;
+               $rd[$ids[1]]['id'] = $ids[1];
+               
+
+              // dd(json_encode($rd));
+
+              
+               $count += 2;
+           }else{
+               
+               $arr1 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
+               $ids = $this->makeimageOne($l, $arr1);
+               $i += 4;
+               $count++;
+               $rd[$ids]['value'] = $arr1;
+               $rd[$ids]['id'] = $ids;
+           }
+
+          
+          $l++;
+          
        }
 
-       $position = 82;
-         //Array 2
-       foreach($array2 as $item){
-            $img->text($item, 652, $position, function($font) {
-                $font->file(public_path('arial/arial.ttf'));
-                $font->size(20);
-                
-            });  
+       $json[$dt] = $rd;
+       $ticket = new Ticket();
+       $ticket->data = Carbon::now()->format('Y-m-d');
+       $ticket->tickets = json_encode($rd);
+       $ticket->save();
+       //dd(json_encode($json));
 
-            $img->text($dt, 607,  22, function($font) {
-                $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->color('#FFFAFA');
-                
-            });  
+       return $l;
+    }
 
-            $position += 37;
-
-        }
-
-        $position = 82;
-          //Array 3
-        foreach($array3 as $item){
-             $img->text($item, 1199, $position, function($font) {
-                 $font->file(public_path('arial/arial.ttf'));
-                 $font->size(20);
-                 
-             });  
-
-             $img->text($dt, 1152,  22, function($font) {
-                $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->color('#FFFAFA');
-                
-            });  
-
-             $position += 37;
- 
-         }
-      
-       $img->save(public_path('images/bilhetes/'.$count.'.jpg')); 
-      
-    }  
+   
     
-
     public function generate(Request $request)
     {
         // return view("home");
         $min = $request->min;
         $max =  $request->max;
         $num =  ($request->num * 4);
-
         $intervalo = $max - $min;
-
-
-       
-
 
         if($min > $max){
             return back()->with('error', 'O numero minimo informado no intervalo não pode ser maior que o numero final!');
@@ -205,52 +194,80 @@ class MediaController extends Controller
         }
       
 
-        //return view('modelo/pdf1', ['path' => $path]);
-       // dd($modelo);
-       //dd();
         $numeros = $this->randomGen($min,$max,$num);
-        $count = 0;
-        $i=0;
         $range = (int) $request->num;
-        $l = 0;
-        //dd(count($numeros));
-        while($i < count($numeros)){
-            if(($count + 3) <= $range){
-                
-                $arr1 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
-                $i += 4;
-                $arr2 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
-                $i += 4;
-                $arr3 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
-                $this->makeimageThree($l, $arr1, $arr2, $arr3);
-                $i += 4;
-                $count += 3;
-            }else if($count + 1 < $range){
-                $arr1 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
-                $i += 4;
-                $arr2 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
-                $i += 4;
-                $this->makeimageTwo($l, $arr1, $arr2);
-                $count += 2;
-            }else{
-                
-                $arr1 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
-                $this->makeimageOne($l, $arr1);
-                $i += 4;
-                $count++;
-            }
-
-           
-           $l++;
-           
-        }
-        $mytime = Carbon::now();
-        //dd("Successo", $mytime->toDateTimeString()); 
+        $count = $this->switchTickets($numeros, $range);
+        $data  =Carbon::now();
+        $dt = $data->format('d/m/Y');
        
-        $pdf = PDF::loadView('modelo/pdf1', ['max' =>$l, 'numeros'=>$numeros]);
-        return $pdf->stream('invoice.pdf');
+       
+        $pdf = PDF::loadView('modelo/pdf1', ['max' =>$count, 'numeros'=>$numeros]);
+        return $pdf->stream($dt.'.pdf');
       
        
 
+    }
+
+    public function viewTicket($id){
+       
+        $ticket = Ticket::where('tickets', 'like', '%"'. $id .'"%' )->first();
+
+        if(empty($ticket)){
+            return back()->with('error', 'O código informado não foi encontrado. Tente novamente');
+        }
+
+        $img = Image::make(public_path('images/b1.jpg'));  
+        $position = 125;
+
+        $json =  (array) json_decode($ticket->tickets, true);
+        $tk = $json[$id];
+        $dt = "cod.: ". $tk['id'];
+        $array = $tk['value'];
+    
+        foreach($array as $item){
+             $img->text($item, 143, $position, function($font) {
+                 $font->file(public_path('arial/arial.ttf'));
+                 $font->size(27);
+                 
+             });  
+ 
+             $img->text($dt, 172,  410, function($font) {
+                 $font->file(public_path('arial/arial.ttf'));
+                 $font->size(16);
+                 $font->align('center');
+                 
+             });  
+             $position += 56;
+ 
+        }
+       
+        $img->save(public_path('images/bilhetes/visualizar.jpg')); 
+        return view('admin.to_view');
+
+    }
+
+    public function findTicket(Request $request){
+
+        $credentials = $request->validate([
+            'ticket' => ['required', 'min:8'],
+        ], ['min' => 'O ticket deve ter no minimo 8 caracteres', 
+            'max' => 'O ticket deve ter no maximo 8 caracteres', 
+            'required' => "O campo ticket é  obrigatorios"]
+        );
+
+        $id = $request->ticket;
+        $ticket = Ticket::where('tickets', 'like', '%"'. $id .'"%' )->first();
+
+        if(empty($ticket)){
+            return back()->with('error', 'O código informado não foi encontrado. Tente novamente');
+        }
+
+        //$json =  (array) json_decode($ticket->tickets, true);
+        //$arr = $json[$id];
+        
+        return redirect()->route('view-ticket',['ticket'=> $id]);
+        //dd();
+   
+        
     }
 }
