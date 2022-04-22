@@ -1,60 +1,60 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Bilhetes</title>
-  </head>
-  <style>
-
-      body{
-       /* margin-top: -5%;*/
-        margin-left: -6%;
-        margin-right: -6%;
-       
-      }
-
-      .container{
-        
-          
-      }
-      .box{
-          margin-bottom: 1%;
-          width: 100%;
+</head>
+<style>
+    body {
+        /* margin-top: -5%;*/
 
 
-      }
 
-      .hide{
+    }
+
+    .container {
+        margin-left: -3.6%;
+        margin-right: -3.6%;
+    }
+
+    .box {
+        margin-bottom: 1%;
+        width: 100%;
+
+
+    }
+
+    .hide {
         display: none;
-      }
+    }
 
-      .numeros{
-       
+    .numeros {
+
         position: absolute;
         font-size: 12px;
         width: 100%;
-       
-      }
 
-      
+    }
 
-  </style>
-  <body>
+</style>
 
-  
+<body>
+
+
     <div class="container">
-      
-      @for($i=0; $i<$max; $i++)
-       
-        <div class="box">
-            <img src="{{public_path('images/bilhetes/'.$i.'.jpg')}}" width="100%">
-        </div>
-      @endfor
-               
+
+        @for ($i = 0; $i < $max; $i++)
+            <div class="box">
+                <img src="{{ public_path('images/bilhetes/' . $i . '.jpg') }}" width="100%">
+            </div>
+        @endfor
+
     </div>
 
-  
 
-  
-  </body>
+
+
+</body>
+
 </html>
