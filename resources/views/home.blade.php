@@ -55,14 +55,14 @@
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form3Example3">Email</label>
                                 <input type="email" name="email" id="form3Example3" class="form-control"
-                                    placeholder="Informe a quantidade de Bilhetes" required />
+                                    placeholder="Email" required />
                             </div>
 
                             <!-- Senha -->
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="form3Example3">Senha</label>
                                 <input type="password" name="password" id="form3Example3" minlength="1"
-                                    class="form-control" placeholder="Informe a quantidade de Bilhetes" required />
+                                    class="form-control" placeholder="senha" required />
 
                             </div>
                             <!-- Lembrar Senha -->
