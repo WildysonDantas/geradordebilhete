@@ -255,7 +255,7 @@ class MediaController extends Controller
         $dt = "cod.: ". $random3;
 
 
-        foreach($array4 as $item){
+        foreach($array3 as $item){
             $img->text($item, 1250, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -326,6 +326,7 @@ class MediaController extends Controller
                 $i += 4;
                 $arr4 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
                 $ids = $this->makeimageFour($l, $arr1, $arr2, $arr3, $arr4);
+               // dd( $arr1, $arr2, $arr3, $arr4);
 
                 $rd[$ids[0]]['value'] = $arr1;
                 $rd[$ids[0]]['id'] =$ids[0];
