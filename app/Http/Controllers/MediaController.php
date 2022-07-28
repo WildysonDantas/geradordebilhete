@@ -27,6 +27,18 @@ class MediaController extends Controller
         return array_slice($numbers, 0, $quantity);
     }
 
+    function addZerosLeft(Int $item){
+        if($item < 10){
+            $item = "000". $item;
+        }else if($item < 100){
+            $item =  "00". $item;
+        }else{
+            $item =  "0". $item;
+        }
+
+        return $item;
+    }
+
     //Escreve uma Imagem
     public function makeimageOne(Int $count, Array $array) {  
        $img = Image::make(public_path('images/modelo/bn1.jpg'));  
@@ -35,6 +47,10 @@ class MediaController extends Controller
        $dt = "cod.: ". $random;
 
        foreach($array as $item){
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+           
             $img->text($item, 96, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -69,6 +85,9 @@ class MediaController extends Controller
        $random = Str::random(8);
        $keys = [$random];
        foreach($array as $item){
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
             $img->text($item, 96, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -94,6 +113,9 @@ class MediaController extends Controller
       
 
        foreach($array2 as $item){
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
             $img->text($item, 673, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -126,7 +148,12 @@ class MediaController extends Controller
         $dt = "cod.: ". $random;
        // use callback to define details
         //Array 1
-       foreach($array as $item){
+        foreach($array as $item){
+
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+
             $img->text($item, 96, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -151,6 +178,11 @@ class MediaController extends Controller
       
          //Array 2
        foreach($array2 as $item){
+
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+
             $img->text($item, 673, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -176,6 +208,11 @@ class MediaController extends Controller
 
 
         foreach($array3 as $item){
+
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+
             $img->text($item, 1250, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -208,6 +245,11 @@ class MediaController extends Controller
        // use callback to define details
         //Array 1
        foreach($array as $item){
+
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+
             $img->text($item, 96, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -232,6 +274,11 @@ class MediaController extends Controller
       
          //Array 2
        foreach($array2 as $item){
+
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+
             $img->text($item, 673, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -256,6 +303,11 @@ class MediaController extends Controller
 
 
         foreach($array3 as $item){
+
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+
             $img->text($item, 1250, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -280,6 +332,11 @@ class MediaController extends Controller
          $keys = [$random, $random2, $random3, $random4];
 
          foreach($array4 as $item){
+
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+
             $img->text($item, 1827, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
                 $font->size(24);
@@ -454,6 +511,10 @@ class MediaController extends Controller
         $array = $tk['value'];
     
         foreach($array as $item){
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+
              $img->text($item, 143, $position, function($font) {
                  $font->file(public_path('arial/arial.ttf'));
                  $font->size(27);

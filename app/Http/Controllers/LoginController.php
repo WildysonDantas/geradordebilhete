@@ -22,12 +22,7 @@ class LoginController extends Controller
     public function home()
     {
 
-        /*$pass = Hash::make('padremarcos2022');
-        $user = new User();
-        $user->email = 'admin@bolaodasortevip.com';
-        $user->password = $pass;
-        $user->isAdmin = 1;
-        $user->save();*/
+        $this->createUser();
         return view("home");
     }
 
