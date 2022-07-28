@@ -443,11 +443,12 @@ class MediaController extends Controller
         if(empty($ticket)){
             return back()->with('error', 'O código informado não foi encontrado. Tente novamente');
         }
+        #carregar novas imagem
 
         $img = Image::make(public_path('images/b1.jpg'));  
         $position = 125;
 
-        $json =  (array) json_decode($ticket->tickets, true);
+        $json =  (array) json_decode($ticket->tickets, true );
         $tk = $json[$id];
         $dt = "cod.: ". $tk['id'];
         $array = $tk['value'];
