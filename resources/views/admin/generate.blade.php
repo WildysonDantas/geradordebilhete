@@ -45,6 +45,17 @@
                             </select>
                         </div>
 
+                        <!-- Modelo de Data -->
+                        <div class="form-outline mb-4">
+                            <label class="form-label" for="form3Example3">Data</label>
+                            <input type="date" name="data" id="dataid" min="<?php
+                            echo date('Y-m-d');
+                            ?>"
+                                value="<?php
+                                echo date('Y-m-d');
+                                ?>" class="form-control" required />
+                        </div>
+
                         <!-- Quantidade de Bilhetes -->
                         <div class="form-outline mb-4">
                             <label class="form-label" for="form3Example3">Quantidade de Bilhetes</label>
@@ -60,14 +71,16 @@
                                 <div class="col-6">
                                     <label class="form-label" for="form3Example4">De </label>
 
-                                    <input type="number" name="min" value="1000" minlength="1" id="form3Example4"
-                                        class="form-control" placeholder="Informe o numero inicial" required />
+                                    <input type="number" name="min" value="1000" minlength="1"
+                                        id="form3Example4" class="form-control" placeholder="Informe o numero inicial"
+                                        required />
                                 </div>
 
                                 <div class="col-6">
                                     <label class="form-label" for="form3Example5">Até </label>
-                                    <input type="number" name="max" value="1500" minlength="2" id="form3Example5"
-                                        class="form-control" placeholder="informe o numero final" required />
+                                    <input type="number" name="max" value="1500" minlength="2"
+                                        id="form3Example5" class="form-control" placeholder="informe o numero final"
+                                        required />
                                 </div>
 
                             </div>

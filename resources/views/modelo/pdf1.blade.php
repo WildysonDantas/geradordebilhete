@@ -14,13 +14,15 @@
     }
 
     .container {
-        margin-left: -3.6%;
-        margin-right: -3.6%;
+        margin-left: -4%;
+        margin-right: -4%;
+        margin-top: -4%;
+        margin-bottom: -5%
     }
 
     .box {
-        margin-bottom: 1%;
-        width: 100%;
+
+        width: 97%;
 
 
     }
@@ -36,7 +38,6 @@
         width: 100%;
 
     }
-
 </style>
 
 <body>

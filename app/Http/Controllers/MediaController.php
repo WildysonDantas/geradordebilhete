@@ -39,98 +39,195 @@ class MediaController extends Controller
         return $item;
     }
 
-    //Escreve uma Imagem
-    public function makeimageOne(Int $count, Array $array) {  
-       $img = Image::make(public_path('images/modelo/bn1.jpg'));  
-       $position = 89;
-       $random = Str::random(8);
-       $dt = "cod.: ". $random;
+    public function makeCanhoto1($img, $dt, Array $array, String $data){
+    
+        $numeros = "";
+         //DATA CANHOTO1
+        $img->text($data, 250,  80, function($font) {
+            $font->file(public_path('arial/arial.ttf'));
+            $font->size(30);
 
-       foreach($array as $item){
+        }); 
+
+        foreach($array as $key => $item ){
             if($item < 1000){
                 $item = $this->addZerosLeft($item);
             }
-           
-            $img->text($item, 96, $position, function($font) {
+            $numeros = $numeros  . ($item . " ");
+        }
+        //NUMEROS CANHOTO 1
+        $img->text($numeros, 150,  152, function($font) {
+            $font->file(public_path('arial/arial.ttf'));
+            $font->size(28);
+
+        }); 
+
+    
+        //CODIGO CANHOTO 1
+      return  $img->text($dt, 150,  215, function($font) {
+        $font->file(public_path('arial/arial.ttf'));
+        $font->size(30);
+   
+         });  
+
+    }
+
+    public function makeCanhoto2($img, $dt, Array $array, String $data){
+    
+        $numeros = "";
+         //DATA CANHOTO 2
+        $img->text($data, 1295,  80, function($font) {
+            $font->file(public_path('arial/arial.ttf'));
+            $font->size(30);
+
+        }); 
+
+        foreach($array as $key => $item ){
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+            $numeros = $numeros  . ($item . " ");
+        }
+        //NUMEROS CANHOTO 2
+        $img->text($numeros, 1195,  152, function($font) {
+            $font->file(public_path('arial/arial.ttf'));
+            $font->size(28);
+
+        }); 
+
+        //CODIGO CANHOTO 2
+        return $img->text($dt, 1195,  215, function($font) {
+            $font->file(public_path('arial/arial.ttf'));
+            $font->size(30);
+       
+        }); 
+
+    }
+
+    //Escreve uma Imagem
+    public function makeimageOne(Int $count, Array $array, String $data) {  
+        $img = Image::make(public_path('images/modelo/bn1.jpg'));  
+        $position = 75;
+        $random = Str::random(8);
+        $dt = $random;
+        
+        $width = 865;
+
+    
+        $img = $this->makeCanhoto1($img, $dt, $array, $data);
+      
+      
+
+        foreach($array as $key => $item){
+            if($item < 1000){
+                $item = $this->addZerosLeft($item);
+            }
+            $img->text($item, $width, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(24);
+                $font->size(45);
                 
             });  
 
-            $img->text($dt, 122,  292, function($font) {
+            $img->text($dt, 845,  310, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->align('center');
-                
+                $font->size(30);  
+            
                 
             });  
-            $position += 40;
+            
+            $position += 80;
 
+            if($key == 1){
+                $width = 1020;
+                $position = 75;
+            }
 
-       }
+        }
       
        $img->save(public_path('images/bilhetes/'.$count.'.jpg')); 
        return $random;
       
     }  
 
+   
+
     //Escreve duas Imagens em Linha
-    public function makeimageTwo(Int $count, Array $array, Array $array2) {  
+    public function makeimageTwo(Int $count, Array $array, Array $array2, String $data) {  
        $img = Image::make(public_path('images/modelo/bn2.jpg'));  
-       $position = 89;
+       $position = 75;
        // use callback to define details
        $random = Str::random(8);
-       $dt = "cod.: ". $random;
-        
-       $random = Str::random(8);
+       $dt = $random;
+      // $random = Str::random(8);
        $keys = [$random];
-       foreach($array as $item){
+       $width = 1910;
+
+       
+        $img = $this->makeCanhoto2($img, $dt, $array, $data);
+        
+
+       foreach($array as $key => $item ){
             if($item < 1000){
                 $item = $this->addZerosLeft($item);
             }
-            $img->text($item, 96, $position, function($font) {
+            $img->text($item, $width, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(24);
+                $font->size(45);
                 
             });  
 
-            $img->text($dt, 122,  292, function($font) {
+            $img->text($dt, 1890,  310, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->align('center');
+                $font->size(30);
+               
                 
                 
             });  
-            $position += 40;
+            $position += 80;
+
+            if($key == 1){
+                $width = 2065;
+                $position = 75;
+            }
 
        }
 
-       $position = 89;
+       $position = 75;
        $random2 = Str::random(8);
-       $dt = "cod.: ". $random2;
+       $dt = $random2;
        $keys = [$random, $random2];
+       $width = 865;
+
+    
+        $img = $this->makeCanhoto1($img, $dt, $array2, $data);
       
       
 
-       foreach($array2 as $item){
+       foreach($array2 as $key => $item){
             if($item < 1000){
                 $item = $this->addZerosLeft($item);
             }
-            $img->text($item, 673, $position, function($font) {
+            $img->text($item, $width, $position, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(24);
+                $font->size(45);
                 
             });  
 
-            $img->text($dt, 699,  292, function($font) {
+            $img->text($dt, 845,  310, function($font) {
                 $font->file(public_path('arial/arial.ttf'));
-                $font->size(13);
-                $font->align('center');
+                $font->size(30);
+                
+               
             
                 
             });  
             
-            $position += 40;
+            $position += 80;
+
+            if($key == 1){
+                $width = 1020;
+                $position = 75;
+            }
 
         }
       
@@ -140,7 +237,7 @@ class MediaController extends Controller
       
     }  
 
-    //Escreve 3 imagens em linha
+    /*//Escreve 3 imagens em linha
     public function makeimageThree(Int $count, Array $array, Array $array2, Array $array3){  
         $img = Image::make(public_path('images/modelo/bn3.jpg'));  
         $position = 89;
@@ -359,21 +456,20 @@ class MediaController extends Controller
       return $keys;
     }  
 
+    */
+
     //Mudar para um ou duas imagens do PDF
-    public function switchTickets(Array $numeros, Int $range){
+    public function switchTickets(Array $numeros, Int $range, String $data){
 
         $i=0;
         $count = 0;
         $l=0;
-        $data  =Carbon::now();
-        $dt = $data->format('d/m/Y');
-       
         $rd = [];
 
 
         while($i < count($numeros)){
 
-            if(($count + 4) <= $range){
+           /* if(($count + 4) <= $range){
                 
                 $arr1 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
                 $i += 4;
@@ -414,18 +510,21 @@ class MediaController extends Controller
                 $i += 4;
                 $count += 3;
 
-            }else if($count + 1 < $range){
+            }else*/
+             if($count + 1 < $range){
                $arr1 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
                $i += 4;
                $arr2 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
                $i += 4;
                //Retornando os ids de seus repectivos numeros
-               $ids = $this->makeimageTwo($l, $arr1, $arr2);
+               $ids = $this->makeimageTwo($l, $arr1, $arr2, $data);
                 
                $rd[$ids[0]]['value'] = $arr1;
                $rd[$ids[0]]['id'] =$ids[0];
                $rd[$ids[1]]['value'] = $arr2;
                $rd[$ids[1]]['id'] = $ids[1];
+               $rd[$ids[0]]['data'] = $data;
+               $rd[$ids[1]]['data'] = $data;
                
 
               // dd(json_encode($rd));
@@ -435,11 +534,12 @@ class MediaController extends Controller
            }else{
                
                $arr1 = [$numeros[$i], $numeros[$i+1], $numeros[$i+2],  $numeros[$i+3] ];
-               $ids = $this->makeimageOne($l, $arr1);
+               $ids = $this->makeimageOne($l, $arr1, $data);
                $i += 4;
                $count++;
                $rd[$ids]['value'] = $arr1;
                $rd[$ids]['id'] = $ids;
+               $rd[$ids]['data'] = $data;
            }
 
           
@@ -447,9 +547,9 @@ class MediaController extends Controller
           
        }
 
-        $json[$dt] = $rd;
+        $json[$data] = $rd;
         $ticket = new Ticket();
-        $ticket->data = Carbon::now()->format('Y-m-d');
+        $ticket->data = $data;
         $ticket->tickets = json_encode($rd);
         $ticket->save();
        //dd(json_encode($json));
@@ -466,7 +566,8 @@ class MediaController extends Controller
         $max =  $request->max;
         $num =  ($request->num * 4);
         $intervalo = $max - $min;
-
+        
+       
         if($min > $max){
             return back()->with('error', 'O numero minimo informado no intervalo não pode ser maior que o numero final!');
 
@@ -478,16 +579,17 @@ class MediaController extends Controller
             //retornar erro pois a  
         }
       
-
+        $data =  Carbon::createFromFormat('Y-m-d', $request->data)->format('d/m/Y');
+        
         $numeros = $this->randomGen($min,$max,$num);
         $range = (int) $request->num;
-        $count = $this->switchTickets($numeros, $range);
-        $data  =Carbon::now();
-        $dt = $data->format('d/m/Y');
+        $count = $this->switchTickets($numeros, $range, $data);
+
+       
        
        
         $pdf = PDF::loadView('modelo/pdf1', ['max' =>$count, 'numeros'=>$numeros])->setPaper('a4', 'landscape');
-        return $pdf->stream($dt.'.pdf');
+        return $pdf->stream($data.'.pdf');
       
        
 
@@ -502,33 +604,45 @@ class MediaController extends Controller
         }
         #carregar novas imagem
 
-        $img = Image::make(public_path('images/b1.jpg'));  
-        $position = 125;
+        $img = Image::make(public_path('images/modelo/bn1.jpg'));  
+        $position = 75;
 
         $json =  (array) json_decode($ticket->tickets, true );
+        //dd($json);
         $tk = $json[$id];
-        $dt = "cod.: ". $tk['id'];
+        $dt = $tk['id'];
         $array = $tk['value'];
+        $width = 865;
+
     
-        foreach($array as $item){
+        $img = $this->makeCanhoto1($img, $dt, $array, $tk['data']);
+      
+      
+
+        foreach($array as $key => $item){
             if($item < 1000){
                 $item = $this->addZerosLeft($item);
             }
+            $img->text($item, $width, $position, function($font) {
+                $font->file(public_path('arial/arial.ttf'));
+                $font->size(45);
+                
+            });  
 
-             $img->text($item, 143, $position, function($font) {
-                 $font->file(public_path('arial/arial.ttf'));
-                 $font->size(27);
-                 
-             });  
- 
-             $img->text($dt, 172,  410, function($font) {
-                 $font->file(public_path('arial/arial.ttf'));
-                 $font->size(16);
-                 $font->align('center');
-                 
-             });  
-             $position += 56;
- 
+            $img->text($dt, 845,  310, function($font) {
+                $font->file(public_path('arial/arial.ttf'));
+                $font->size(30);  
+            
+                
+            });  
+            
+            $position += 80;
+
+            if($key == 1){
+                $width = 1020;
+                $position = 75;
+            }
+
         }
        
         $img->save(public_path('images/bilhetes/visualizar.jpg')); 
